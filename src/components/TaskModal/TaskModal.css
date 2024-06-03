@@ -1,0 +1,130 @@
+.task-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-width: 400px;
+    width: 100%;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.task-modal__title {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    color: #333;
+}
+
+
+.task-modal__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: #dc3545;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.task-modal__close:hover {
+    color: #c82333;
+}
+.task-modal__input {
+    width: 80%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.task-modal__error{
+    position: relative;
+    color: red;
+    font-size: 0.9em;
+
+}
+.task-modal__add-button,
+.task-modal__update-button {
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.task-modal__add-button:hover,
+.task-modal__update-button:hover {
+    background-color: #218838;
+}
+
+.task-modal__list {
+    margin-top: 35px;
+    list-style-type: none;
+    padding: 0;
+}
+
+.task-modal__list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f7f7f7;
+    margin-top: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.task-modal__edit-button {
+    background-color: #ffc107;
+    border: none;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 5px;
+}
+
+.task-modal__edit-button:hover {
+    background-color: #e0a800;
+}
+
+.task-modal__remove-button {
+    background-color: #dc3545;
+    border: none;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.task-modal__remove-button:hover {
+    background-color: #c82333;
+}
+@media (max-width: 480px) {
+    .task-modal {
+        width: 80%;
+    }
+    .task-modal__edit-button {
+        margin: 10px;
+    }
+}

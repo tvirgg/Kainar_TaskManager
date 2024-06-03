@@ -1,0 +1,115 @@
+.user-list {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    max-width: 500px;
+    text-align: center;
+}
+
+.user-list__title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+.user-list__input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.user-list__add-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.user-list__add-button:hover {
+    background-color: #0056b3;
+}
+
+.user-list__list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user-list__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-top: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.user-list__item:hover {
+    background-color: #f1f1f1;
+}
+
+.user-list__link {
+    color: #007bff;
+    text-decoration: none;
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.user-list__input--edit {
+    margin-right: 10px;
+    width: calc(100% - 110px);
+}
+
+.user-list__button-group {
+    display: flex;
+    gap: 10px;
+}
+
+.user-list__edit-button,
+.user-list__remove-button,
+.user-list__cancel-button,
+.user-list__save-button {
+    background-color: #007bff;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 10px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-list__edit-button:hover,
+.user-list__remove-button:hover,
+.user-list__cancel-button:hover,
+.user-list__save-button:hover {
+    background-color: #0056b3;
+}
+
+.user-list__remove-button {
+    background-color: #dc3545;
+}
+
+.user-list__remove-button:hover {
+    background-color: #c82333;
+}
+
+.user-list__cancel-button {
+    background-color: #6c757d;
+}
+
+.user-list__cancel-button:hover {
+    background-color: #5a6268;
+}
