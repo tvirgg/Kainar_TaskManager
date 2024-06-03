@@ -31,4 +31,5 @@ These instructions will help you set up the project on your local machine for de
 ### Installation
 
 1. **Clone the repository:**
+2. Run **docker-compose up --build**
 
