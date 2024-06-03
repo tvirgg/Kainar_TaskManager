@@ -15,7 +15,6 @@ This is a React-based Calendar To-Do application that allows users to manage tas
 
 - **Frontend:** React, Redux, React Router
 - **Styling:** CSS (following BEM methodology)
-- **Backend:** Nginx (for serving the built application)
 - **Containerization:** Docker, Docker Compose
 
 ## Getting Started
