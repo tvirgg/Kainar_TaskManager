@@ -8,7 +8,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    max-width: 400px;
+    max-width: 500px;
     width: 100%;
     animation: fadeIn 0.3s ease-in-out;
 }
@@ -26,8 +26,8 @@
     margin-bottom: 20px;
     font-size: 1.2em;
     color: #333;
+    text-align: center;
 }
-
 
 .task-modal__close {
     position: absolute;
@@ -44,23 +44,30 @@
 .task-modal__close:hover {
     color: #c82333;
 }
+
 .task-modal__input {
-    width: 80%;
+    width: calc(100% - 20px);
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
-.task-modal__error{
-    position: relative;
+
+.task-modal__error {
     color: red;
     font-size: 0.9em;
-
+    text-align: center;
 }
+
 .task-modal__add-button,
-.task-modal__update-button {
-    margin-top: 30px;
+.task-modal__update-button,
+.json_add,
+.sub_close {
+    margin-top: 10px;
     padding: 10px 20px;
     background-color: #28a745;
     color: white;
@@ -68,39 +75,63 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: inline-block;
+    margin-right: 5px;
 }
 
 .task-modal__add-button:hover,
-.task-modal__update-button:hover {
+.task-modal__update-button:hover,
+.json_add:hover,
+.sub_close:hover {
     background-color: #218838;
 }
 
+.task-modal__columns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.task-modal__column {
+    width: 48%;
+}
+
 .task-modal__list {
-    margin-top: 35px;
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
 .task-modal__list-item {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-    padding: 10px;
     background-color: #f7f7f7;
-    margin-top: 5px;
+    margin-top: 10px;
+    padding: 10px;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.task-modal__edit-button {
-    background-color: #ffc107;
+.task-modal__list-item p {
+    margin: 0 0 10px 0;
+}
+
+.task-modal__edit-button,
+.task-modal__remove-button,
+.task-modal__done-button,
+.task-modal__move-button {
     border: none;
     padding: 5px 10px;
     color: white;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.task-modal__edit-button {
+    background-color: #ffc107;
 }
 
 .task-modal__edit-button:hover {
@@ -109,22 +140,63 @@
 
 .task-modal__remove-button {
     background-color: #dc3545;
-    border: none;
-    padding: 5px 10px;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 .task-modal__remove-button:hover {
     background-color: #c82333;
 }
+
+.task-modal__done-button {
+    background-color: #17a2b8;
+}
+
+.task-modal__done-button:hover {
+    background-color: #138496;
+}
+
+.task-modal__move-button {
+    background-color: #007bff;
+}
+
+.task-modal__move-button:hover {
+    background-color: #0056b3;
+}
+
+.json_add {
+    background-color: #6c1cc2;
+    margin-left: 10px;
+}
+
+.sub_close {
+    background-color: #c82333;
+    margin-left: 10px;
+}
+
+.json-modal__input {
+    width: calc(100% - 20px);
+    min-height: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 @media (max-width: 480px) {
     .task-modal {
         width: 80%;
     }
-    .task-modal__edit-button {
-        margin: 10px;
+
+    .task-modal__column {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .task-modal__columns {
+        flex-direction: column;
+        align-items: center;
     }
 }

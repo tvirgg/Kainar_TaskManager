@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface TaskState {
-    [key: string]: string[]; // key будет представлять строку формата "YYYY-MM-DD"
+    todo: string[];
+    done: string[];
 }
 
 interface UserTaskState {
-    [username: string]: TaskState;
+    [username: string]: { [date: string]: TaskState };
 }
 
 const loadState = (): UserTaskState => {
@@ -25,7 +26,7 @@ const saveState = (state: UserTaskState) => {
         const serializedState = JSON.stringify(state);
         localStorage.setItem('tasks', serializedState);
     } catch (err) {
-        // Игнорируем ошибки
+        // Ignoring errors
     }
 };
 
@@ -41,30 +42,60 @@ const tasksSlice = createSlice({
                 state[username] = {};
             }
             if (!state[username][date]) {
-                state[username][date] = [];
+                state[username][date] = { todo: [], done: [] };
             }
-            state[username][date].push(task);
+            state[username][date].todo.push(task);
             saveState(state);
         },
-        removeTask: (state, action: PayloadAction<{ username: string; date: string; index: number }>) => {
-            const { username, date, index } = action.payload;
+        removeTask: (state, action: PayloadAction<{ username: string; date: string; index: number; isDone: boolean }>) => {
+            const { username, date, index, isDone } = action.payload;
             if (state[username] && state[username][date]) {
-                state[username][date].splice(index, 1);
-                if (state[username][date].length === 0) {
-                    delete state[username][date];
+                if (isDone) {
+                    state[username][date].done.splice(index, 1);
+                } else {
+                    state[username][date].todo.splice(index, 1);
                 }
                 saveState(state);
             }
         },
-        updateTask: (state, action: PayloadAction<{ username: string; date: string; index: number; newTask: string }>) => {
-            const { username, date, index, newTask } = action.payload;
+        updateTask: (state, action: PayloadAction<{ username: string; date: string; index: number; newTask: string; isDone: boolean }>) => {
+            const { username, date, index, newTask, isDone } = action.payload;
             if (state[username] && state[username][date]) {
-                state[username][date][index] = newTask;
+                if (isDone) {
+                    state[username][date].done[index] = newTask;
+                } else {
+                    state[username][date].todo[index] = newTask;
+                }
+                saveState(state);
+            }
+        },
+        toggleTaskStatus: (state, action: PayloadAction<{ username: string; date: string; index: number }>) => {
+            const { username, date, index } = action.payload;
+            if (state[username] && state[username][date]) {
+                const task = state[username][date].todo[index];
+                state[username][date].todo.splice(index, 1);
+                state[username][date].done.push(task);
+                saveState(state);
+            }
+        },
+        moveTaskToNextDay: (state, action: PayloadAction<{ username: string; date: string; index: number }>) => {
+            const { username, date, index } = action.payload;
+            if (state[username] && state[username][date]) {
+                const task = state[username][date].todo[index];
+                const currentDate = new Date(date);
+                const nextDate = new Date(currentDate);
+                nextDate.setDate(currentDate.getDate() + 1);
+                const nextDateKey = nextDate.toISOString().split('T')[0];
+                if (!state[username][nextDateKey]) {
+                    state[username][nextDateKey] = { todo: [], done: [] };
+                }
+                state[username][nextDateKey].todo.push(task);
+                state[username][date].todo.splice(index, 1);
                 saveState(state);
             }
         },
     },
 });
 
-export const { addTask, removeTask, updateTask } = tasksSlice.actions;
+export const { addTask, removeTask, updateTask, toggleTaskStatus, moveTaskToNextDay } = tasksSlice.actions;
 export default tasksSlice.reducer;

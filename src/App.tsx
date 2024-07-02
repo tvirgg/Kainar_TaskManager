@@ -1,15 +1,105 @@
-import React from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import './App.css';
 import Calendar from './components/Calendar/Calendar';
 import UserList from './components/UserList/UserList';
 import { UserProvider, useUser } from './contexts/UserContext';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import ProfilePage from './components/Profile/Profile';
+import { log } from 'console';
 
 function App() {
+    // let comments = [
+    //     {
+    //       id: 1,
+    //       text: "message 1",
+    //     },
+    //     {
+    //       id: 2,
+    //       text: "message 2",
+    //       children: [
+    //         {
+    //           id: 4,
+    //           text: "message 4",
+    //           children: [
+    //             {
+    //               id: 7,
+    //               text: "message 7",
+    //             },
+    //             {
+    //               id: 8,
+    //               text: "message 8",
+    //               children: [
+    //                 {
+    //                   id: 9,
+    //                   text: "message 9",
+    //                 },
+    //                 {
+    //                   id: 10,
+    //                   text: "message 10",
+    //                 },
+    //               ],
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       id: 5,
+    //       text: "message 5",
+    //     },
+    //   ];
+    // useEffect(()=>{
+    //     setTimeout(() => {
+    //         console.log('Timeout');    
+    //     }, 0);
+        // const myPromise1 = new Promise(() => {
+        //     console.log('Promise');
+        //   });
+        // var alex = {age: 26};
+        // alex.age = 29; 
+        // var hery = {...(alex = {...alex}, alex, 42)};
+        // alex.age = 31;
+        // console.log(hery);
+
+        //   let myPromise = new Promise((resolve, reject) => {
+        
+        //       resolve("Операция завершена успешно!"); // успешное завершение
+
+        //       reject("Произошла ошибка."); // завершение с ошибкой
+
+        //   });
+        //   const promise = new Promise((resolve) => {
+        //     console.log(2);
+        //     resolve(new Promise((resolve) => {
+        //       console.log(3);
+        //       resolve(3);
+        //     }));
+        //   });
+          
+        //   promise.then((message) => {
+        //     console.log(message);
+        //   });
+        //   console.log(4);
+
+        //   async function myAsyncFunction() {
+        //     try {
+        //         // Создание и ожидание завершения промиса
+        //          await console.log('SNaff');
+        //         }
+        //     catch (error) {
+        //         // Этот блок выполнится, если промис завершится с ошибкой
+        //         console.log(error); // Этот код выполнится в случае ошибки и выведет "Произошла ошибка."
+        //     }
+        // }
+        
+        // myPromise1.then();
+        // setTimeout(() => {
+        //     console.log(1);
+        //   });
+    // },[])
     return (
         <UserProvider>
-            <Router>
+            <Router>        
                 <div className="app">
                     <header className="app__header">
                         <Header />
@@ -27,6 +117,41 @@ function App() {
     );
 }
 
+interface Comment{
+    id: number
+    text: string
+    children?: Comment[]
+}
+
+const Comment: React.FC <{ comment: Comment }> = ({ comment }) => {
+    let [isClose, SetisClose] = React.useState(true);
+    let onHendleClose = ()=>{
+        SetisClose(!isClose);
+    }
+    return(
+    <li>
+        <p onClick={onHendleClose}>
+            {comment.text}
+        </p>
+        <li>
+            {comment.children && isClose && <Comments  comments={comment.children}/>}
+        </li>
+    </li>
+    )
+};
+const Comments: React.FC <{ comments: Comment[] }> = ({ comments }) => {
+    return(
+        <div>
+            {
+                comments.map( msg => (
+                    <ul>
+                        <Comment key={msg.id} comment={msg}/>
+                    </ul>
+                ))
+            }
+        </div>
+    );
+};
 const Header: React.FC = () => {
     const { currentUser, setCurrentUser } = useUser();
     const navigate = useNavigate();
@@ -48,9 +173,6 @@ const Header: React.FC = () => {
                     <button onClick={handleLogout} className="app__link">Change User</button>
                 </div>
             )}
-            {/*<nav>*/}
-            {/*    <Link to="/" className="app__link">Home</Link>*/}
-            {/*</nav>*/}
         </div>
     );
 };
