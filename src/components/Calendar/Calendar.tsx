@@ -24,6 +24,7 @@ const Calendar: React.FC<CalendarProps> = ({ username }) => {
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
     const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth() + 1);
     const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
+    const [currentDay, setCurrentDay] = useState<number>(new Date().getDate());
     const tasks = useSelector((state: RootState) => state.tasks[username] || {});
 
     const days = getDaysInMonth(currentYear, currentMonth);
@@ -76,12 +77,16 @@ const Calendar: React.FC<CalendarProps> = ({ username }) => {
             <div className="calendar__body">
                 {days.map(day => {
                     const dateKey = `${currentYear}-${currentMonth.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+                    const dayTasks = tasks[dateKey];
+                    const isCurrentDay = (currentDay === day && currentMonth === (new Date().getMonth() + 1) && currentYear === new Date().getFullYear());
+                    const hasTasks = dayTasks && Object.values(dayTasks).some(arr => Array.isArray(arr) && arr.length > 0);
                     return (
                         <Day
                             key={day}
                             day={day}
                             isHoliday={holidays.includes(day)}
-                            hasTasks={!!tasks[dateKey]} // Проверка наличия задач для данного дня
+                            hasTasks={hasTasks} // Проверка наличия задач для данного дня
+                            isCurrentDay={isCurrentDay} // Проверка на текущий день, месяц и год
                             onClick={handleDayClick}
                         />
                     );

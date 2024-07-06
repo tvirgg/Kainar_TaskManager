@@ -8,6 +8,10 @@ interface TaskState {
 interface UserTaskState {
     [username: string]: { [date: string]: TaskState };
 }
+interface RootState {
+    tasks: UserTaskState;
+    common_tasks: string[];
+}
 
 const loadState = (): UserTaskState => {
     try {
