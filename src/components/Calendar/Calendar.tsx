@@ -5,6 +5,7 @@ import TaskModal from '../TaskModal/TaskModal';
 import './Calendar.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import CommonTasks from '../Common_tasks/CommonTasks';
 
 const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -25,7 +26,7 @@ const Calendar: React.FC<CalendarProps> = ({ username }) => {
     const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth() + 1);
     const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
     const [currentDay, setCurrentDay] = useState<number>(new Date().getDate());
-    const tasks = useSelector((state: RootState) => state.tasks[username] || {});
+    const tasks = useSelector((state: RootState) => state.tasks.tasks[username] || {});
 
     const days = getDaysInMonth(currentYear, currentMonth);
     const fetchHolidays = async () => {
@@ -74,11 +75,13 @@ const Calendar: React.FC<CalendarProps> = ({ username }) => {
                 <span className="calendar__month">{monthNames[currentMonth - 1]} {currentYear}</span>
                 <button className="calendar__button" onClick={handleNextMonth}>Next</button>
             </div>
+            <CommonTasks username={username} />
             <div className="calendar__body">
                 {days.map(day => {
                     const dateKey = `${currentYear}-${currentMonth.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
                     const dayTasks = tasks[dateKey];
                     const isCurrentDay = (currentDay === day && currentMonth === (new Date().getMonth() + 1) && currentYear === new Date().getFullYear());
+                    console.log(dateKey, currentDay, day, currentMonth, currentYear);
                     const hasTasks = dayTasks && Object.values(dayTasks).some(arr => Array.isArray(arr) && arr.length > 0);
                     return (
                         <Day

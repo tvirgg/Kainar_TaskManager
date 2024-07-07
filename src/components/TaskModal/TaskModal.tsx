@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { addTask, removeTask, updateTask, toggleTaskStatus, moveTaskToNextDay } from '../../store/tasksSlice';
+import { addTask, removeTask, updateTask, toggleTaskStatus, moveTaskToNextDay, assignCommonTaskToDate } from '../../store/tasksSlice';
 import './TaskModal.css';
 
 interface TaskModalProps {
@@ -16,7 +16,8 @@ const TaskModal: React.FC<TaskModalProps> = ({ username, day, month, year, onClo
     const dispatch = useDispatch();
     const monthIndex = new Date(`${month} 1, ${year}`).getMonth() + 1;
     const dateKey = `${year}-${monthIndex.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-    const tasks = useSelector((state: RootState) => state.tasks[username]?.[dateKey] || { todo: [], done: [] });
+    const tasks = useSelector((state: RootState) => state.tasks.tasks[username]?.[dateKey] || { todo: [], done: [] });
+    const commonTasks = useSelector((state: RootState) => state.tasks.commonTasks[username] || []);
 
     const [newTask, setNewTask] = useState('');
     const [isEditing, setIsEditing] = useState(false);
@@ -112,6 +113,10 @@ const TaskModal: React.FC<TaskModalProps> = ({ username, day, month, year, onClo
         }
     };
 
+    const handleAssignCommonTask = (task: string) => {
+        dispatch(assignCommonTaskToDate({ username, date: dateKey, task }));
+    };
+
     return (
         <div className="task-modal">
             <button className="task-modal__close" onClick={onClose}>×</button>
@@ -163,6 +168,20 @@ const TaskModal: React.FC<TaskModalProps> = ({ username, day, month, year, onClo
                         ))}
                     </ul>
                 </div>
+            </div>
+
+            <div className="task-modal__common-tasks">
+                <h3>Common Tasks</h3>
+                <ul className="task-modal__list">
+                    {commonTasks.map((task, index) => (
+                        <li key={index} className="task-modal__list-item">
+                            <p>{task}</p>
+                            <div>
+                                <button className="task-modal__assign-button" onClick={() => handleAssignCommonTask(task)}>Assign to This Day</button>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </div>
 
             {isJsonVisible && (

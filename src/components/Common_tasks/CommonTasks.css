@@ -1,0 +1,24 @@
+.common-tasks {
+    margin: 20px 0;
+}
+
+.common-tasks h2 {
+    margin-bottom: 10px;
+}
+
+.common-tasks input {
+    margin-right: 10px;
+}
+
+.common-tasks ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.common-tasks li {
+    margin-bottom: 5px;
+}
+
+.common-tasks button {
+    margin-left: 10px;
+}
